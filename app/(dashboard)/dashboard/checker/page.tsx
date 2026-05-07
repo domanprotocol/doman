@@ -19,6 +19,7 @@ import {
   Flag,
   CheckCircle2,
   X,
+  Wallet,
 } from "lucide-react";
 import type { ScanResult } from "@/types/api";
 import { ReportScamModal } from "@/components/dashboard/report-scam-modal";
@@ -35,9 +36,46 @@ function riskLevelToIcon(level: string) {
   return FileCode;
 }
 
+function ConnectWalletOverlay() {
+  const { connect, connectors, isPending } = useConnect();
+  return (
+    <div className="fixed inset-0 z-20 flex items-center justify-center rounded-xl backdrop-blur-sm bg-background/70 p-4">
+      <div className="w-full max-w-sm rounded-2xl border border-card-border bg-card p-6 shadow-2xl text-center flex flex-col max-h-[90vh]">
+        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-accent/20 bg-accent/10 shrink-0">
+          <Wallet size={24} className="text-accent" />
+        </div>
+        <h2 className="mb-2 text-lg font-semibold">Connect Your Wallet</h2>
+        <p className="mb-6 text-sm text-muted">
+          Connect your wallet to use the Address Checker and access all features.
+        </p>
+        <div className="flex flex-col gap-2 overflow-y-auto">
+          {connectors.map((connector) => (
+            <button
+              key={connector.uid}
+              onClick={() => connect({ connector })}
+              disabled={isPending}
+              className="flex w-full items-center gap-3 rounded-xl border border-card-border bg-background px-4 py-2.5 text-sm font-medium transition-colors hover:border-accent/50 hover:bg-accent/5 disabled:opacity-50 shrink-0"
+            >
+              <Wallet size={18} className="shrink-0 text-muted" />
+              <span className="flex-1 text-left truncate">
+                {isPending ? "Connecting…" : connector.name}
+              </span>
+              {isPending ? (
+                <Loader2 size={14} className="animate-spin text-muted shrink-0" />
+              ) : (
+                <ArrowRight size={14} className="text-muted shrink-0" />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CheckerContent() {
   const searchParams = useSearchParams();
-  const { address: walletAddress } = useAccount();
+  const { address: walletAddress, isConnected } = useAccount();
   const [query, setQuery] = useState(searchParams.get("q") ?? "");
   const [state, setState] = useState<ScanState>({ status: "idle" });
   const didAutoRun = useRef(false);
@@ -78,7 +116,8 @@ function CheckerContent() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="relative space-y-8">
+      {!isConnected && <ConnectWalletOverlay />}
       <div>
         <h1 className="text-2xl font-bold tracking-tight">
           Address, ENS & Domain Checker

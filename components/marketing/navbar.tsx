@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAccount, useConnect } from "wagmi";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -17,34 +16,15 @@ const navLinks = [
 ];
 
 function LaunchAppButton({ className }: { className?: string }) {
-  const { isConnected } = useAccount();
-  const { connect, connectors } = useConnect();
   const router = useRouter();
-  const [connecting, setConnecting] = useState(false);
 
-  const handleLaunch = async () => {
-    if (isConnected) {
-      router.push("/dashboard/checker");
-      return;
-    }
-    setConnecting(true);
-    try {
-      connect(
-        { connector: connectors[0] },
-        {
-          onSuccess: () => router.push("/dashboard/checker"),
-          onError: () => setConnecting(false),
-          onSettled: () => setConnecting(false),
-        }
-      );
-    } catch {
-      setConnecting(false);
-    }
+  const handleLaunch = () => {
+    router.push("/dashboard/checker");
   };
 
   return (
-    <Button size="sm" className={className} onClick={handleLaunch} disabled={connecting}>
-      {connecting ? "Connecting..." : "Launch App"}
+    <Button size="sm" className={className} onClick={handleLaunch}>
+      Launch App
     </Button>
   );
 }

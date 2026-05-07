@@ -30,9 +30,9 @@ function Hero() {
     <section className="relative min-h-[90vh] overflow-hidden bg-background">
       {/* Multi-layer gradient background */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-1/3 -left-1/4 h-[600px] w-[600px] rounded-full bg-accent/15 blur-[140px]" />
-        <div className="absolute -bottom-1/4 -right-1/5 h-[500px] w-[500px] rounded-full bg-blue-500/8 blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[800px] w-[800px] rounded-full bg-accent/5 blur-[180px]" />
+        <div className="absolute -top-1/3 -left-1/4 h-150 w-150 rounded-full bg-accent/15 blur-[140px]" />
+        <div className="absolute -bottom-1/4 -right-1/5 h-125 w-125 rounded-full bg-blue-500/8 blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-200 w-200 rounded-full bg-accent/5 blur-[180px]" />
       </div>
 
       {/* Grid overlay */}
@@ -94,9 +94,9 @@ function Hero() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <GuardedButton size="lg" href="/dashboard/checker">
+            <Button size="lg" href="/dashboard/checker">
               Try the Checker <ArrowRight size={16} className="ml-2" />
-            </GuardedButton>
+            </Button>
             <Button variant="secondary" size="lg" href="#features">
               See How It Works
             </Button>

@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import { Loader2 } from "lucide-react";
 
-// Pages inside /dashboard that are accessible without a wallet
+// Pages inside /dashboard that are accessible without a wallet (show overlay instead)
 const PUBLIC_PATHS = [
   "/connect",
   "/dashboard/checker",
@@ -24,13 +24,8 @@ export function WalletGuard({ children }: { children: React.ReactNode }) {
     if (status === "connecting" || status === "reconnecting") return;
 
     if (!isConnected && !isPublicPath) {
-      if (prevConnected.current === true) {
-        // Mid-session disconnect → back to marketing home
-        router.replace("/");
-      } else {
-        // Initial launch without wallet → connect page
-        router.replace("/connect");
-      }
+      // Both initial launch and mid-session disconnect → checker (shows connect wallet overlay)
+      router.replace("/dashboard/checker");
     }
 
     prevConnected.current = isConnected;

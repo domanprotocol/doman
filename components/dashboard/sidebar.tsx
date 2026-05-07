@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -55,11 +56,15 @@ export function Sidebar() {
       >
         {/* Logo */}
         <div className="flex h-16 items-center gap-3 border-b border-card-border px-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent glow-accent">
-            <Shield size={16} className="text-white" />
-          </div>
-          <Link href="/dashboard" className="text-lg font-bold tracking-tight">
-            DOMAN
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <Image
+              src="/logo2.png"
+              alt="Doman"
+              width={120}
+              height={32}
+              priority
+              className="h-14 w-auto"
+            />
           </Link>
         </div>
 
