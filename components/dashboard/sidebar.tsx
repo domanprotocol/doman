@@ -94,14 +94,14 @@ export function Sidebar() {
         </nav>
 
         {/* Bottom */}
-        <div className="border-t border-card-border px-4 py-4">
+        {/* <div className="border-t border-card-border px-4 py-4">
           <div className="rounded-xl bg-surface p-3">
             <p className="text-xs font-medium text-foreground">Free Plan</p>
             <p className="mt-1 text-[10px] text-muted">
               50 checks/day · Upgrade for more
             </p>
           </div>
-        </div>
+        </div> */}
       </aside>
     </>
   );
